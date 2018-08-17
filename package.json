@@ -1,0 +1,9 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "uber backend. node.js graphql typescript",
+  "main": "index.js",
+  "repository": "https://github.com/donggyushin/uber-server.git",
+  "author": "rontend",
+  "license": "MIT"
+}
