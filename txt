@@ -1,0 +1,4 @@
+파일을 더 추가할께. 우리는 GraphQL을 할거니까, 
+something.graphql 파일을 추가하자. 
+
+nodemon이 ts와 graphql 확장자를 감시하도록 하고 싶어. 
