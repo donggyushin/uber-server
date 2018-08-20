@@ -1,6 +1,10 @@
+import { SayHelloQueryArgs } from "../../../types/graphql";
+
 const resolvers = {
     Query: {
-        sayHello: () => "Hello~ how are ya"
+        sayHello: (_, args:SayHelloQueryArgs) : String => {
+            return `hello ${args.name}`;
+        }
     }
 }
 
