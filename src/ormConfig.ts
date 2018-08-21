@@ -1,6 +1,9 @@
 import {ConnectionOptions} from "typeorm"
 
 
+console.log(process.env.DB_ENDPOINT)
+console.log(process.env.DB_USERNAME);
+console.log(process.env.DB_PASSWORD);
 
 const defaultConnectionOptions : ConnectionOptions = {
     type: "postgres",
@@ -8,7 +11,7 @@ const defaultConnectionOptions : ConnectionOptions = {
     synchronize: true,
     logging: true,
     entities: [
-        "/entities/**/*.*"
+        "entities/**/*.*"
     ],
     host: process.env.DB_ENDPOINT,
     port: 5432,
