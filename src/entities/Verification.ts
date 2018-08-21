@@ -1,5 +1,6 @@
-import { Entity, BaseEntity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, BeforeInsert } from "typeorm";
+import { Entity, BaseEntity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, BeforeInsert, ManyToOne } from "typeorm";
 import { verificationTarget } from "../types/types";
+import User from "./User";
 
 const PHONE = "PHONE";
 const EMAIL = "EMAIL";
@@ -24,6 +25,9 @@ class Verification extends BaseEntity {
 
     @UpdateDateColumn()
     updatedAt: string;
+
+    @ManyToOne(type => User, user => user.verifications)
+    user:User;
 
     @BeforeInsert()
     createKey():void {
