@@ -1,5 +1,9 @@
-import {Entity, PrimaryGeneratedColumn, BaseEntity, Column, CreateDateColumn, UpdateDateColumn} from "typeorm";
+import {Entity, PrimaryGeneratedColumn, BaseEntity, Column, CreateDateColumn, UpdateDateColumn, BeforeInsert, BeforeUpdate} from "typeorm";
 import { IsEmail } from "class-validator";
+import bcrypt from "bcrypt";
+
+const BCRYPT_ROUNDS = 10;
+
 @Entity()
 class User extends BaseEntity {
     @PrimaryGeneratedColumn()
@@ -56,6 +60,19 @@ class User extends BaseEntity {
 
     get fullName(): string {
         return `${this.firstName} ${this.lastName}`
+    }
+
+    private hashPassword(password:string) : Promise<string> {
+        return bcrypt.hash(password, BCRYPT_ROUNDS);
+    }
+
+    @BeforeInsert()
+    @BeforeUpdate()
+    async savePassword():Promise<void> {
+        if(this.password){
+            const hashedPassword = await this.hashPassword(this.password);
+            this.password = hashedPassword;
+        }
     }
 
 }
