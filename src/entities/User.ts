@@ -1,6 +1,8 @@
-import {Entity, PrimaryGeneratedColumn, BaseEntity, Column, CreateDateColumn, UpdateDateColumn, BeforeInsert, BeforeUpdate} from "typeorm";
+import {Entity, PrimaryGeneratedColumn, BaseEntity, Column, CreateDateColumn, UpdateDateColumn, BeforeInsert, BeforeUpdate, ManyToOne, OneToMany} from "typeorm";
 import { IsEmail } from "class-validator";
 import bcrypt from "bcrypt";
+import Chat from "./Chat";
+import Message from "./Message";
 
 const BCRYPT_ROUNDS = 10;
 
@@ -57,6 +59,12 @@ class User extends BaseEntity {
     lastLat: number;
     @Column({type:"double precision", default: 0})
     lastOrientation: number;
+
+    @ManyToOne(type => Chat, chat => chat.participant)
+    chat:Chat;
+
+    @OneToMany(type => Message, message => message.user)
+    messages:Message[];
 
     get fullName(): string {
         return `${this.firstName} ${this.lastName}`
