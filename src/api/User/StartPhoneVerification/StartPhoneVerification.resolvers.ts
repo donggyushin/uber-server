@@ -2,6 +2,7 @@ import { Resolvers } from "../../../types/resolvers";
 
 import { StartPhoneVerificationMutationArgs, StartPhoneVerificationResponse } from "../../../types/graphql";
 import Verification from "../../../entities/Verification";
+import { sendVerificationSMS } from "../../../utils/sendSMS";
 
 const resolvers:Resolvers = {
     Mutation: {
@@ -17,6 +18,12 @@ const resolvers:Resolvers = {
                     target:"PHONE"
                 }).save();
                 //To do: send SMS
+                console.log(newVerification)
+                await sendVerificationSMS(newVerification.payload, newVerification.key)
+                return {
+                    ok:true,
+                    error:null
+                }
 
             }catch(error){
                 return {
