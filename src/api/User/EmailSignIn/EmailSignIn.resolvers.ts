@@ -1,13 +1,15 @@
+import User from "../../../entities/User";
 import { Resolvers } from "../../../types/resolvers";
 import { EmailSignInMutationArgs, EmailSignInResponse } from "../../../types/graphql";
-import User from "../../../entities/User";
+
 
 const resolvers:Resolvers = {
     Mutation: {
         EmailSignIn: async(_, args:EmailSignInMutationArgs):Promise<EmailSignInResponse> => {
-            const {email} = args;
+            const {email, password} = args;
             try{
-                const user = User.findOne({email})
+                
+                const user = await User.findOne({email})
                 if(!user){
                     return {
                         ok:true,
@@ -15,6 +17,23 @@ const resolvers:Resolvers = {
                         token:null
                     }
                 }
+
+                const checkPassword = user.comparePassword(password);
+
+                if(checkPassword){
+                    return {
+                        ok:true,
+                        error: null,
+                        token: "comming soon"
+                    }
+                }else{
+                    return {
+                        ok:false,
+                        error:"Wrong Password",
+                        token:null
+                    }
+                }
+                
             }catch(error){
                 return {
                     ok:false,
