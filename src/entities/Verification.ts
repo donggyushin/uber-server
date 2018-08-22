@@ -26,8 +26,7 @@ class Verification extends BaseEntity {
     @UpdateDateColumn()
     updatedAt: string;
 
-    @ManyToOne(type => User, user => user.verifications)
-    user:User;
+
 
     @BeforeInsert()
     createKey():void {
